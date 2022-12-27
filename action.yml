@@ -1,0 +1,37 @@
+name: "Rclone GitHub Action"
+description: "Run rclone for files and directories from different cloud storage providers"
+author: "digital-clouds"
+branding:
+  icon: "cloud"
+  color: "blue"
+inputs:
+  self-update:
+    description: "Update rclone to the latest version"
+    required: false
+    default: "true"
+  config-file:
+    description: "Set custom location for rclone configuration file"
+    required: false
+  config:
+    description: "Configuration to set up for rclone"
+    required: true
+  debug:
+    description: "Verbose debugging and logging or carry on, but do quit on errors"
+    required: false
+    default: "false"
+  args:
+    description: "Arguments to pass for rclone"
+    required: true
+outputs:
+  rclone:
+    description: "The output of rclone"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    SELF_UPDATE: ${{ inputs.self-update }}
+    CONFIG_FILE: ${{ inputs.config-file }}
+    RCLONE_CONF: ${{ inputs.config }}
+    DEBUG: ${{ inputs.debug }}
+  args:
+    - ${{ inputs.args }}
