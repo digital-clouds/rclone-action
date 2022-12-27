@@ -32,6 +32,7 @@ jobs:
       - name: "⤵️ Check out code from GitHub"
         uses: actions/checkout@v3
       - name: "⏫ Run rclone"
+        id: run-rclone
         uses: digital-clouds/rclone-action@v1.0.0
         with:
           # The RCLONE_CONFIG secret must be set to set up for rclone (required)
@@ -40,6 +41,10 @@ jobs:
           args: "sync ${{ env.local_path }} ${{ env.remote_path }}"
           # Verbose debugging and logging or carry on, but do quit on errors (optional)
           debug: false
+
+        # Optional: Output of the rclone
+      - name: "⏬ Output rclone"
+        run: echo "The time was ${{ steps.run-rclone.outputs.rclone }}"
 ```
 
 > - `config` can be omitted if [CLI arguments](https://rclone.org/flags/#backend-flags) or [environment variables](https://rclone.org/docs/#environment-variables) are supplied.

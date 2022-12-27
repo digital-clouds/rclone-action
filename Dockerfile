@@ -9,4 +9,5 @@ RUN apk --no-cache add \
   openssh-client-default=~9.1
 
 COPY entrypoint.sh /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
