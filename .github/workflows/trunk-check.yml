@@ -19,4 +19,4 @@ jobs:
       - name: "⤵️  Check out code from GitHub"
         uses: actions/checkout@v3
       - name: "⭕ Trunk Check"
-        uses: trunk-io/trunk-action@2f62e2c43ba13da4274a3e64dc618d9cb7367e03
+        uses: trunk-io/trunk-action@b033203e937f42022e351f1313cf84123c4472df
