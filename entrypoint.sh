@@ -1,24 +1,24 @@
 #!/bin/sh -l
 
 # Run rclone for files and directories from different cloud storage providers.
-if [ "$DEBUG" = "false" ]; then
+if [ "${DEBUG}" = "false" ]; then
 	# Carry on, but do quit on errors
 	set -e
-elif [ "$DEBUG" = "true" ]; then
+elif [ "${DEBUG}" = "true" ]; then
 	# Verbose debugging
 	set -exuo xtrace
 	export LOG_LEVEL=debug
 	export ACTIONS_STEP_DEBUG=true
 fi
 
-if [ -z "$CONFIG_FILE" ]; then
+if [ -z "${CONFIG_FILE}" ]; then
 	# Get default location for the configuration file
 	CONFIG_FILE=$(rclone config file | grep 'rclone.conf' | awk '{print $1}')
 fi
 
-if [ -n "$RCLONE_CONF" ]; then
+if [ -n "${RCLONE_CONF}" ]; then
 	# Write user set rclone configuration
-	echo "$RCLONE_CONF" >"$CONFIG_FILE"
+	echo "${RCLONE_CONF}" >"${CONFIG_FILE}"
 else
 	# Unable to proceed if rclone configuration not set
 	echo "The configuration for the rclone is not set"
@@ -31,11 +31,11 @@ if [ ! -x "$(command -v rclone)" ]; then
 	exit 1
 fi
 
-if [ "$SELF_UPDATE" = "true" ]; then
+if [ "${SELF_UPDATE}" = "true" ]; then
 	# Update rclone to the latest version
 	rclone selfupdate
 fi
 
 # Run rclone
 rclone=$(sh -c "rclone $*")
-echo "rclone=$rclone" >>"$GITHUB_OUTPUT"
+echo "rclone=${rclone}" >>"${GITHUB_OUTPUT}"
